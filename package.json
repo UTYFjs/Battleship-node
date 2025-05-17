@@ -5,17 +5,27 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "start": "node ./index.js",
-        "start:dev": "nodemon ./index.js",
+        "start": "ts-node src/index.ts",
+        "start:dev": "node --no-warnings --watch --experimental-strip-types src/index.ts",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Andrei Auchynnikau",
     "keywords": [],
     "license": "ISC",
     "devDependencies": {
-        "nodemon": "^2.0.16"
+        "@types/node": "^22.15.18",
+        "@types/ws": "^8.18.1",
+        "@typescript-eslint/eslint-plugin": "^8.32.1",
+        "@typescript-eslint/parser": "^8.32.1",
+        "eslint": "^9.27.0",
+        "eslint-config-prettier": "^10.1.5",
+        "eslint-import-resolver-typescript": "^4.3.4",
+        "eslint-plugin-import": "^2.31.0",
+        "prettier": "^3.5.3",
+        "typescript": "^5.8.3"
     },
     "dependencies": {
-        "ws": "^8.8.0"
+        "cross-env": "^7.0.3",
+        "ws": "^8.18.2"
     }
 }
