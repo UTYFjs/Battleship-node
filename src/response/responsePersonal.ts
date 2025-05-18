@@ -1,10 +1,8 @@
 import { WebSocket } from "ws";
 import { userDb } from "../db/db.ts";
-
+import { prepareDataForUpdateRoom, prepareDataForUpdateWinners } from './utils.ts';
 
 export const responsePersonal = (ws: WebSocket, isError?: boolean) => {
-
-	// console.log("responsePErsonsl ws", ws )
 	const user = userDb.find((user)=> user.userId === ws);
 	if (isError) {
 		if (user) {
@@ -27,6 +25,9 @@ export const responsePersonal = (ws: WebSocket, isError?: boolean) => {
 			};
 			const response = { type: "reg", data: JSON.stringify(dataResponse), id: 0 };
 			ws.send(JSON.stringify(response));
+			//отправляем таблицу лидеров и комнаты
+			ws.send(prepareDataForUpdateRoom())
+			ws.send(prepareDataForUpdateWinners());
 		}
 	}
 };

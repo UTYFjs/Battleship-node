@@ -3,7 +3,8 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
-    "target": "es2022",
+    "target": "ESNext",
+    // "target": "es2022",
     "outDir": "dist",
     "strict": true,
     "resolveJsonModule": true,
@@ -11,8 +12,15 @@
     "noImplicitAny": true,
     "noImplicitOverride": true,
     "allowJs": true,
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "front"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "front"
+  ]
 }

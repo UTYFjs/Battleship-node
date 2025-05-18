@@ -1,3 +1,5 @@
+import WebSocket from 'ws';
+
 export interface WsResponse {
   type: string;
   data: string /*Record<string, number | boolean> | string*/;
@@ -61,5 +63,10 @@ export enum typesResponseToGameRoom {
   'start_game' = 'start_game',
   'turn' = 'turn',
   'attack' = 'attack',
-  // 'finish' = 'finish',
+  'finish' = 'finish',
+}
+
+export enum UpdateType {
+  UPDATE_ROOM = 'update_room',
+  UPDATE_WINNERS = 'update_winners',
 }

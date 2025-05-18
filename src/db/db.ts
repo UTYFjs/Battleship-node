@@ -1,4 +1,5 @@
-import { GameType, RoomType, ShipType, UserType, WinnersType } from '../types/types.ts';
+import { WebSocket } from 'ws';
+import { CoordinatsType, GameType, RoomType, ShipType, UserType, WinnersType } from '../types/types.ts';
 
 export const userDb: Array<UserType> = [];
 
@@ -73,7 +74,6 @@ const getShipsOnField = (data: { gameId: number; ships: Array<ShipType>; indexPl
 
   return field;
 };
-
 
 const getEmptyField = () => {
   const field = [];

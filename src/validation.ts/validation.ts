@@ -1,6 +1,6 @@
-// import { WsResponse } from "../types/types.ts";
+import { WsResponse } from '../types/types.ts';
 
-export const validation = (message/*: WsResponse*/) =>{
+export const validation = (message: WsResponse) =>{
 	let data;
 	if(message.data){
 		data = JSON.parse(message.data);

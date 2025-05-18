@@ -1,10 +1,7 @@
-// import { typesResponseToGameRoom } from '../const/constants';
-// import { gameDb, roomDb, winnersDb } from '../db/db';
-// import { wss } from '../websocket_server';
-
 import { gameDb, roomDb, winnersDb } from '../db/db.ts';
-import { typesResponseToGameRoom } from '../types/types.ts';
+import { typesResponseToGameRoom, UpdateType } from '../types/types.ts';
 import { wss } from '../ws_server/wsServer.ts';
+import { responseAll } from './responseAll.ts';
 
 export const responseToGameRoom = (
   type: typesResponseToGameRoom,
@@ -192,10 +189,11 @@ const checkStatusAttack = (dataAttack: { x: number; y: number; gameId: number; i
             }
 
             // send all update winners
-            const responseAll = { type: 'update_winners', data: JSON.stringify(winnersDb), id: 0 };
-            wss.clients.forEach((client) => {
-              client.send(JSON.stringify(responseAll));
-            });
+            responseAll(UpdateType.UPDATE_WINNERS);
+            // const responseAll = { type: UpdateType.UPDATE_WINNERS, data: JSON.stringify(winnersDb), id: 0 };
+            // wss.clients.forEach((client) => {
+            //   client.send(JSON.stringify(responseAll));
+            // });
           });
         }
         return 'killed';
