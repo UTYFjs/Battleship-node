@@ -15,8 +15,6 @@ wss.on("connection", function connection(ws) {
 
 	ws.on("message",  (message) =>  {
 		const messageParsed = JSON.parse(message.toString()) as WsResponse;
-	// console.log('message got', messageParsed);
-
 	// если атака и атакует не currentPlayer не отправляем в обработчик
 	if (messageParsed.type === "attack" ){
 		const data = validation(messageParsed);

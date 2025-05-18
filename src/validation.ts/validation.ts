@@ -16,5 +16,4 @@ export const validation = (message: WsResponse) =>{
 		if(!data){data = 1;}
 		return data;
 	}
-  
 };

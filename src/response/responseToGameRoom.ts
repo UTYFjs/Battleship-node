@@ -190,10 +190,6 @@ const checkStatusAttack = (dataAttack: { x: number; y: number; gameId: number; i
 
             // send all update winners
             responseAll(UpdateType.UPDATE_WINNERS);
-            // const responseAll = { type: UpdateType.UPDATE_WINNERS, data: JSON.stringify(winnersDb), id: 0 };
-            // wss.clients.forEach((client) => {
-            //   client.send(JSON.stringify(responseAll));
-            // });
           });
         }
         return 'killed';

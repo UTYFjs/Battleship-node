@@ -14,7 +14,6 @@ export const handle = async (message: WsResponse, ws: WebSocket, wss: Server) =>
     let currentUser: UserType | undefined;
     switch (message.type) {
       case 'reg':
-        // eslint-disable-next-line no-case-declarations
         currentUser = userDb.find((user) => user.name === data.name);
         if (currentUser) {
           const currentPassword = userDb.find((user) => user.password === data.password);
@@ -35,10 +34,7 @@ export const handle = async (message: WsResponse, ws: WebSocket, wss: Server) =>
         return;
 
       case 'create_room':
-        console.log('create room');
-        // eslint-disable-next-line no-case-declarations
         currentUser = userDb.find((user) => user.userId === ws);
-        // eslint-disable-next-line no-case-declarations
         const roomsThisUser = roomDb.find((room) => room.roomUsers.find((user) => user.userId === ws));
         if (!roomsThisUser) {
           if (currentUser) {
@@ -49,7 +45,6 @@ export const handle = async (message: WsResponse, ws: WebSocket, wss: Server) =>
 
         return;
       case 'add_user_to_room':
-        console.log('add_user_to_room');
         const currentRoom = roomDb.find((room) => room.roomId === data.indexRoom);
         if (currentRoom) {
           const firstPlayer = currentRoom.roomUsers.find((user) => user.index === 0);
@@ -68,22 +63,17 @@ export const handle = async (message: WsResponse, ws: WebSocket, wss: Server) =>
 
         return;
       case 'add_ships':
-        console.log('add_ships');
-
         addShips(data);
         responseToGameRoom(typesResponseToGameRoom.start_game, data.gameId);
         responseToGameRoom(typesResponseToGameRoom.turn, data.gameId);
         return;
       case 'attack':
-        // console.log('attack');
-
         const currentGame = gameDb.find((game) => game.idGame === data.gameId);
 
 				if (currentGame) {
           const bot = !currentGame.currentRoom.roomUsers[1].userId;
 
           if (bot) {
-						console.log('атака c ботом currentGame data.indexPlayer', currentGame.currentPlayer, data.indexPlayer);
             if (data.indexPlayer === currentGame.currentPlayer && typeof currentGame.currentPlayer === 'number') {
               if (
                 currentGame[currentGame.currentPlayer].logShots.findIndex(
@@ -106,10 +96,8 @@ export const handle = async (message: WsResponse, ws: WebSocket, wss: Server) =>
                   currentPlayerID.send(JSON.stringify(response));
                 }
               }
-							console.log("заканчиваем атаку игрока с ботом")
             }
             //logic for bot
-						console.log('data.indexPlayer', data.indexPlayer,"currentGame.currentPlayer", currentGame.currentPlayer);
             if (currentGame.currentPlayer === 1 ) {
 							console.log('должен стрелять бот data.indexPlayer', data.indexPlayer);
 							if (data.indexPlayer !== currentGame.currentPlayer){
@@ -128,7 +116,6 @@ export const handle = async (message: WsResponse, ws: WebSocket, wss: Server) =>
                   const botAttack = async () => {
                     return new Promise((resolve) => {
                       setTimeout(() => {
-                        console.log('атака бота');
                         resolve(undefined);
                       }, 2000);
                     });
@@ -146,7 +133,6 @@ export const handle = async (message: WsResponse, ws: WebSocket, wss: Server) =>
             }
           } else {
             if (data.indexPlayer === currentGame.currentPlayer && typeof currentGame.currentPlayer === 'number') {
-							console.log('Атака без бота стреляет currentPlayer', currentGame.currentPlayer);
               if (
                 currentGame[currentGame.currentPlayer].logShots.findIndex(
                   (item) => item.x === data.x && item.y === data.y,
@@ -168,7 +154,6 @@ export const handle = async (message: WsResponse, ws: WebSocket, wss: Server) =>
         }
         return;
       case 'randomAttack':
-        console.log('randomAttack');
         const randomCoordinates = getRandomAttackData(data.gameId);
         const dataForRandomAttack = {
           gameId: data.gameId,
@@ -181,7 +166,6 @@ export const handle = async (message: WsResponse, ws: WebSocket, wss: Server) =>
         responseToGameRoom(typesResponseToGameRoom.turn, data.gameId);
         return;
       case 'single_play':
-        console.log('single_play');
         const currentUserSingle = userDb.find((user) => user.userId === ws);
         if (currentUserSingle) {
           const currentRoom = createRoom({ userId: ws, name: currentUserSingle?.name });

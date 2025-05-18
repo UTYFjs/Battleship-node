@@ -23,3 +23,8 @@ export const prepareDataForUpdateWinners = () =>{
       const response = { type: UpdateType.UPDATE_WINNERS, data: JSON.stringify(dataResponse), id: 0 };
       return JSON.stringify(response);
 }
+
+// export const getDataForResponseAll = {
+//   [UpdateType.UPDATE_ROOM]: prepareDataForUpdateRoom(),
+//   [UpdateType.UPDATE_WINNERS]: prepareDataForUpdateWinners(),
+// };
