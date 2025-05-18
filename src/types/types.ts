@@ -25,3 +25,41 @@ export type WinnersType = {
   name: string;
   wins: number;
 };
+
+export type GameType = {
+  idGame: number;
+  currentPlayer: 0 | 1 | undefined;
+  currentRoom: RoomType;
+  0: {
+    ships: Array<ShipType>;
+    field: Array<Array<number>>;
+    logShots: Array<CoordinatsType>;
+    shipsXY: [{ XY: Array<CoordinatsType>; aroundShips: Array<CoordinatsType>; killedXY: Array<CoordinatsType> }];
+  };
+  1: {
+    ships: Array<ShipType>;
+    field: Array<Array<number>>;
+    logShots: Array<CoordinatsType>;
+    shipsXY: [{ XY: Array<CoordinatsType>; aroundShips: Array<CoordinatsType>; killedXY: Array<CoordinatsType> }];
+  };
+};
+
+export type ShipType = {
+  position: { x: number; y: number };
+  direction: boolean;
+  type: 'huge' | 'large' | 'medium' | 'small';
+  length: number;
+};
+
+export type CoordinatsType = {
+  x: number;
+  y: number;
+};
+
+export enum typesResponseToGameRoom {
+  'create_game' = 'create_game',
+  // 'start_game' = 'start_game',
+  // 'turn' = 'turn',
+  // 'attack' = 'attack',
+  // 'finish' = 'finish',
+}
