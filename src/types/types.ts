@@ -58,8 +58,8 @@ export type CoordinatsType = {
 
 export enum typesResponseToGameRoom {
   'create_game' = 'create_game',
-  // 'start_game' = 'start_game',
-  // 'turn' = 'turn',
+  'start_game' = 'start_game',
+  'turn' = 'turn',
   // 'attack' = 'attack',
   // 'finish' = 'finish',
 }

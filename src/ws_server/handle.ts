@@ -1,5 +1,5 @@
 import WebSocket from "ws";
-import { addUsersToRoom, createGame, createRoom, roomDb, userDb } from "../db/db.ts";
+import { addShips, addUsersToRoom, createGame, createRoom, roomDb, userDb } from "../db/db.ts";
 import { validation } from "../validation.ts/validation.ts";
 import { responsePersonal } from "../response/responsePersonal.ts";
 import { typesResponseToGameRoom, UserType, WsResponse } from '../types/types.ts';
@@ -72,6 +72,10 @@ export const handle = async (message: WsResponse, ws: WebSocket, wss: WebSocket.
         return;
       case 'add_ships':
         console.log('add_ships');
+
+				addShips(data);
+        responseToGameRoom(typesResponseToGameRoom.start_game, data.gameId);
+        responseToGameRoom(typesResponseToGameRoom.turn, data.gameId);
         return;
       case 'attack':
         console.log('attack');
