@@ -99,12 +99,12 @@ export const handle = async (message: WsResponse, ws: WebSocket, wss: Server) =>
             }
             //logic for bot
             if (currentGame.currentPlayer === 1 ) {
-							console.log('должен стрелять бот data.indexPlayer', data.indexPlayer);
 							if (data.indexPlayer !== currentGame.currentPlayer){
 
                 console.log("I'm bot, and I'll win you");
                 while (currentGame.currentPlayer === 1) {
                   const randomCoordinates = getRandomAttackData(data.gameId);
+
                   const dataForRandomAttack = {
                     gameId: data.gameId,
                     x: randomCoordinates.x,
@@ -122,6 +122,7 @@ export const handle = async (message: WsResponse, ws: WebSocket, wss: Server) =>
                   };
 
                   // Используем async/await для ожидания задержки
+                  // console.log('my next shot - ', `X:${randomCoordinates.x}, Y:${randomCoordinates.y}`);
                   await botAttack();
 
                   responseToGameRoom(typesResponseToGameRoom.attack, data.gameId, dataForRandomAttack);
