@@ -1,10 +1,9 @@
 {
   "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "target": "ESNext",
-    // "target": "es2022",
     "outDir": "dist",
     "strict": true,
     "resolveJsonModule": true,
@@ -13,7 +12,9 @@
     "noImplicitOverride": true,
     "allowJs": true,
     "allowImportingTsExtensions": true,
-    "noEmit": true
+    "noEmit": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "src/**/*"

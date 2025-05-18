@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import { Server } from 'ws'
-import { addShips, addUsersToRoom, createGame, createRoom, gameDb, roomDb, userDb } from '../db/db';
+import { addShips, addUsersToRoom, createGame, createRoom, gameDb, roomDb, userDb } from '../db/db.ts';
 import { validation } from '../validation.ts/validation.ts';
 import { responsePersonal } from '../response/responsePersonal.ts';
 import { typesResponseToGameRoom, UpdateType, UserType, WsResponse } from '../types/types.ts';
