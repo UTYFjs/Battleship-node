@@ -1,17 +1,16 @@
-import WebSocket from "ws";
-import { addShips, addUsersToRoom, createGame, createRoom, roomDb, userDb } from "../db/db.ts";
-import { validation } from "../validation.ts/validation.ts";
-import { responsePersonal } from "../response/responsePersonal.ts";
+import WebSocket from 'ws';
+import { addShips, addUsersToRoom, createGame, createRoom, gameDb, roomDb, userDb } from '../db/db.ts';
+import { validation } from '../validation.ts/validation.ts';
+import { responsePersonal } from '../response/responsePersonal.ts';
 import { typesResponseToGameRoom, UserType, WsResponse } from '../types/types.ts';
 import { responseAll } from '../response/responseAll.ts';
 import { responseToGameRoom } from '../response/responseToGameRoom.ts';
 
-
 export const handle = async (message: WsResponse, ws: WebSocket, wss: WebSocket.Server) => {
-	const data = validation(message);
-	if (data) {
-		let currentUser: UserType | undefined;
-		switch (message.type) {
+  const data = validation(message);
+  if (data) {
+    let currentUser: UserType | undefined;
+    switch (message.type) {
       case 'reg':
         // eslint-disable-next-line no-case-declarations
         currentUser = userDb.find((user) => user.name === data.name);
@@ -73,24 +72,53 @@ export const handle = async (message: WsResponse, ws: WebSocket, wss: WebSocket.
       case 'add_ships':
         console.log('add_ships');
 
-				addShips(data);
+        addShips(data);
         responseToGameRoom(typesResponseToGameRoom.start_game, data.gameId);
         responseToGameRoom(typesResponseToGameRoom.turn, data.gameId);
         return;
       case 'attack':
         console.log('attack');
+
+        const currentGame = gameDb.find((game) => game.idGame === data.gameId);
+
+        if (currentGame) {
+          // const bot = !currentGame.currentRoom.roomUsers[1].userId;
+
+
+            if (data.indexPlayer === currentGame.currentPlayer && typeof currentGame.currentPlayer === 'number') {
+              if (
+                currentGame[currentGame.currentPlayer].logShots.findIndex(
+                  (item) => item.x === data.x && item.y === data.y,
+                ) === -1
+              ) {
+                currentGame[currentGame.currentPlayer].logShots.push({ x: data.x, y: data.y });
+                responseToGameRoom(typesResponseToGameRoom.attack, data.gameId, data);
+                responseToGameRoom(typesResponseToGameRoom.turn, data.gameId);
+              } else {
+                const dataResponse = { currentPlayer: currentGame.currentPlayer };
+                const response = { type: typesResponseToGameRoom.turn, data: JSON.stringify(dataResponse), id: 0 };
+                const currentPlayerID = currentGame.currentRoom.roomUsers[currentGame.currentPlayer].userId;
+                if (currentPlayerID) {
+                  currentPlayerID.send(JSON.stringify(response));
+                }
+              }
+            }
+          
+        }
+
         return;
       case 'randomAttack':
         console.log('randomAttack');
+
         return;
       case 'single_play':
         console.log('single_play');
 
         return;
     }
-	} else {
-		wss.clients.forEach((client) => {
-			client.send("error");
-		});
-	}
+  } else {
+    wss.clients.forEach((client) => {
+      client.send('error');
+    });
+  }
 };
